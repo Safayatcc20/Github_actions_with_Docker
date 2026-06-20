@@ -1,6 +1,5 @@
 name: Basic Checkout Lab
 
-# Trigger workflow on push to the main branch
 on:
   push:
     branches:
@@ -9,25 +8,38 @@ on:
 jobs:
   basic-checkout:
     runs-on: ubuntu-latest
+    env:
+      CUSTOM_MESSAGE: "Hello from GitHub Actions!"
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: List repository contents
       - name: List files
         run: ls -la
 
-      # Step 3: Display system information
       - name: Show system info
         run: |
           echo "Repository: $GITHUB_REPOSITORY"
           echo "Operating System: $(uname -a)"
           echo "Current Directory: $(pwd)"
 
-      # Step 4: Check software versions
       - name: Check versions
         run: |
           echo "Node version: $(node --version)"
           echo "Python version: $(python --version)"
           echo "Git version: $(git --version)"
+
+      - name: Show system resources
+        run: |
+          echo "Current date and time: $(date)"
+          echo "--- Disk space ---"
+          df -h
+          echo "--- Memory usage ---"
+          free -m
+
+      - name: Display custom message
+        run: echo "$CUSTOM_MESSAGE"
+
+      - name: Conditional step
+        if: github.event_name == 'push'
+        run: echo "This was triggered by a push event"
