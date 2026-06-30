@@ -16,9 +16,11 @@ jobs:
         run: |
           echo "🏗️ Building the application..."
           echo "Build completed successfully!"
+
       - name: Build status
         if: success()
         run: echo "Build Succeeded!"
+
       - name: Handle failure
         if: failure()
         run:  echo "Build failed. Please check  the logs!"
