@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_VERSION: 1.0.0
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
