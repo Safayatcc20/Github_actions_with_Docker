@@ -8,6 +8,8 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
+    env:
+       BUILD_VERSION:1.0.0
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,6 +27,8 @@ jobs:
         if: failure()
         run:  echo "Build failed. Please check  the logs!"
 
+      - name: Print Branch Name
+        run: echo "The current Branch is ${{github.ref}}"
 
   test:
     name: Run Tests
