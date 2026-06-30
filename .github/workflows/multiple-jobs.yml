@@ -16,6 +16,13 @@ jobs:
         run: |
           echo "🏗️ Building the application..."
           echo "Build completed successfully!"
+      - name: Build status
+        if: success()
+        run: echo "Build Succeeded!"
+      - name: Handle failure
+        if: failure()
+        run:  echo "Build failed. Please check  the logs!"
+
 
   test:
     name: Run Tests
@@ -29,12 +36,13 @@ jobs:
 
   deploy:
     name: Deploy Application
+    if: github.ref == 'refs/heads/main'
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
         run: |
-          echo "🚀 Deploying application..."
+          echo "Deploying application to production..."
           echo "Deployment successful!"
 
   notify:
@@ -46,3 +54,4 @@ jobs:
         run: |
           echo "📧 Sending deployment notification..."
           echo "Notification sent!"
+
